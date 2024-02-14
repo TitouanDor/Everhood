@@ -20,7 +20,7 @@ loop = True
 pygame.init()
 
 win = pygame.display.set_mode((displayX, displayY))
-pygame.display.set_caption("UUC-G")
+pygame.display.set_caption("ScoreBoard")
 #endregion
 
 while loop:
