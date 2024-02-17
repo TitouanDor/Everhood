@@ -1,11 +1,17 @@
-class Player:
-    def __init__(self,position, pv, name, sprite) -> None:
-        self.position = position
+import pygame
+
+pygame.init()
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pv, name, sprite) -> None:
+        super().__init__()
+        self.position = 3
         self.pv = pv
         self.name = name
-        self.x = 0
-        self.y = 0
-        self.sprite = sprite
+        self.image = sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = 100
+        self.rect.y = 100
 
         def getName(self): 
             return self.name
