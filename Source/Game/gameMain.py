@@ -23,8 +23,12 @@ os.system("cls")
 
 #region definition variable
 displayX, displayY = pygame.display.get_desktop_sizes()[0]
+displayY -= 70
 
 loop = True
+muse = False
+toucheGauche = False
+toucheDroite = False
 
 color = {
     "black" : (0, 0, 0),
@@ -32,9 +36,9 @@ color = {
     "red" : (255, 0, 0),
 }
 
-sp = pygame.image.load(os.path.dirname(os.path.abspath(__file__)) + "\\Sprite\\placeholder.png")
+sprit = pygame.image.load(os.path.dirname(os.path.abspath(__file__)) + "\\Sprite\\placeholder.png")
 
-player = Player.Player(100, "test", sp)
+player = Player.Player(100, "test", sprit, displayY, displayX)
 
 sprites = pygame.sprite.Group()
 sprites.add(player)
@@ -48,18 +52,38 @@ coo_ligne_blanche = [
         (displayX//2+(displayX//20)*5, displayY)
         ]
 
-win = pygame.display.set_mode((displayX, displayY-65))
+win = pygame.display.set_mode((displayX, displayY))
 pygame.display.set_caption("Game")
 
 #endregion
 
 #region musique
-pygame.mixer.music.load(os.path.dirname(os.path.abspath(__file__)) + "\\SoundTrack\\MEGALOVANIA.mp3")
-pygame.mixer.music.set_volume(2)
-pygame.mixer.music.play()
+if muse:
+    pygame.mixer.music.load(os.path.dirname(os.path.abspath(__file__)) + "\\SoundTrack\\MEGALOVANIA.mp3")
+    pygame.mixer.music.set_volume(2)
+    pygame.mixer.music.play()
 #endreion
 
 while loop:
+
+
+    keys = pygame.key.get_pressed()
+    #region mouvement
+    if keys[pygame.K_LEFT] and (player.position > 1) and (toucheGauche == False): 
+        player.chang_pos(player.position - 1)
+        toucheGauche = True
+
+    elif not(keys[pygame.K_LEFT]): 
+        toucheGauche = False
+        
+    if keys[pygame.K_RIGHT] and (player.position < 5) and (toucheDroite == False): 
+        toucheDroite = True
+        player.chang_pos(player.position + 1)
+
+    elif not(keys[pygame.K_RIGHT]): 
+        toucheDroite = False
+    #endregion
+
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: loop = False
     
